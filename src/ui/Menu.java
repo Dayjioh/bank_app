@@ -21,6 +21,12 @@ public class Menu {
         this.scanner = new Scanner(System.in);
         this.banque = new Banque();
         this.fichierService = new FichierService();
+        try {
+            fichierService.loadFromFile("banque.csv", banque);
+            System.out.println("Données chargées !");
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
 
     public void start() {
@@ -50,14 +56,15 @@ public class Menu {
                         System.out.println("Nom du client : ");
                         String clientName = scanner.next();
                         Client client = banque.getClient(clientName);
-                        System.out.println("ID client : ");
-                        String idClient = scanner.next();
+                        String idClient = "CPT" + System.currentTimeMillis();
                         System.out.println("1- Courant | 2- Epargne ");
                         int accountType = scanner.nextInt();
                         if (accountType == 1) {
                             client.addAccount(new CompteCourant(idClient, 0.0));
                         } else {
-                            client.addAccount(new CompteEpargne(idClient, 0.0, 0.0));
+                            System.out.println("Taux d'intérêt (%) : ");
+                            double interestRate = scanner.nextDouble();
+                            client.addAccount(new CompteEpargne(idClient, 0.0, interestRate));
                         }
 
                     } catch (CompteIntrouvableException e) {
@@ -133,7 +140,7 @@ public class Menu {
                     }
                     break;
                 case 7:
-                        System.out.println("Bye !");
+                    System.out.println("Bye !");
 
                     break;
                 default:

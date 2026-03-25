@@ -23,8 +23,8 @@ public class Banque {
     }
 
     // Récupère un client par son nom — retourne null si introuvable
-    public Client getClient(String name) throws CompteIntrouvableException{
-        if (clients.get(name)==null) {
+    public Client getClient(String name) throws CompteIntrouvableException {
+        if (clients.get(name) == null) {
             throw new CompteIntrouvableException();
         }
         return clients.get(name);
@@ -33,5 +33,9 @@ public class Banque {
     // Retourne tous les clients — values() extrait uniquement les valeurs de la map
     public Collection<Client> getAllClients() {
         return clients.values();
+    }
+
+    public boolean clientExists(String name) {
+        return clients.containsKey(name);
     }
 }

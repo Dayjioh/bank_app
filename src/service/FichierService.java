@@ -33,7 +33,7 @@ public class FichierService {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (banque.getClient(data[0]) == null) {
+                if (!banque.clientExists(data[0])) {
                     banque.addClient(new Client(data[0]));
                 }
                 Client client = banque.getClient(data[0]);
