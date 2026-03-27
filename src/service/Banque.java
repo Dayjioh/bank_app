@@ -35,6 +35,7 @@ public class Banque {
         return clients.values();
     }
 
+    // Vérifier si le client est bien présent dans la liste - containsKey() retourne un booleen true si la clé existe dans la map
     public boolean clientExists(String name) {
         return clients.containsKey(name);
     }
