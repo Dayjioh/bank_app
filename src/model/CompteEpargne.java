@@ -28,6 +28,14 @@ public class CompteEpargne extends Compte {
         addTransaction(new Transaction(TypeOperation.RETRAIT, amount, "Retrait de " + amount + "€"));
     }
 
+    public void transfer(double amount, TypeOperation type) throws SoldeInsuffisantException {
+        if (amount > getBalance()) {
+            throw new SoldeInsuffisantException();
+        }
+        setBalance(getBalance() - amount);
+        addTransaction(new Transaction(TypeOperation.VIREMENT, amount, "Virement de " + amount + "€"));
+    }
+
     public void applyInterest(double interest) {
         setBalance(getBalance() + (getBalance() * interestRate) / 100);
         addTransaction(new Transaction(TypeOperation.DEPOT, (getBalance() * interestRate) / 100, "Intérêts appliqués"));

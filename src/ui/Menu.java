@@ -9,6 +9,8 @@ import model.Client;
 import model.Compte;
 import model.CompteCourant;
 import model.CompteEpargne;
+import model.Transaction;
+import model.Transaction.TypeOperation;
 import service.Banque;
 import service.FichierService;
 
@@ -41,13 +43,14 @@ public class Menu {
             System.out.println("4- Retirer de l'argent");
             System.out.println("5- Effectuer un virement");
             System.out.println("6- Afficher les comptes d'un client");
-            System.out.println("7- Quitter");
+            System.out.println("7- Afficher les transactions d'un client");
+            System.out.println("8- Quitter");
 
             System.out.println("-------------------------------------------");
 
             System.out.print("Entrez un chiffre : ");
 
-            // 
+            //
             try {
                 choix = scanner.nextInt();
             } catch (Exception e) {
@@ -122,6 +125,7 @@ public class Menu {
                         for (Compte compte : client.getAccounts()) {
                             if (compte.getId().equals(idClient)) {
                                 compte.withdraw(amount);
+
                             }
                         }
                     } catch (CompteIntrouvableException e) {
@@ -155,7 +159,7 @@ public class Menu {
                         double amount = scanner.nextDouble();
                         for (Compte compte : client.getAccounts()) {
                             if (compte.getId().equals(idClient)) {
-                                compte.withdraw(amount);
+                                compte.transfer(amount, TypeOperation.VIREMENT);
                             }
                         }
                         for (Compte benefCompte : transferClient.getAccounts()) {
@@ -190,6 +194,25 @@ public class Menu {
                     }
                     break;
                 case 7:
+                    try {
+
+                        System.out.println("Transaction - Nom du client : ");
+                        String clientName = scanner.next();
+                        Client client = banque.getClient(clientName);
+                        for (Compte compte : client.getAccounts()) {
+                            System.out
+                                    .println(compte.getId() + " - " + compte.getType());
+                            for (Transaction t : compte.getTransactions()) {
+                                System.out.println(" " + t.toString());
+                            }
+                        }
+                    } catch (CompteIntrouvableException e) {
+                        System.out.println(e.getMessage());
+
+                    }
+                    autoSave();
+                    break;
+                case 8:
                     System.out.println("Bye !");
 
                     break;

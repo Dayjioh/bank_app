@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import exception.SoldeInsuffisantException;
+import model.Transaction.TypeOperation;
 
 public abstract class Compte {
 
@@ -46,6 +47,8 @@ public abstract class Compte {
     public abstract void deposit(double amount);
 
     public abstract void withdraw(double amount) throws SoldeInsuffisantException;
+
+    public abstract void transfer(double amount, TypeOperation type) throws SoldeInsuffisantException;
 
     public abstract String getType();
 }

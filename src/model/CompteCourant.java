@@ -25,4 +25,12 @@ public class CompteCourant extends Compte {
         setBalance(getBalance() - amount);
         addTransaction(new Transaction(TypeOperation.RETRAIT, amount, "Retrait de " + amount + "€"));
     }
+
+    public void transfer(double amount, TypeOperation type) throws SoldeInsuffisantException {
+        if (amount > getBalance()) {
+            throw new SoldeInsuffisantException();
+        }
+        setBalance(getBalance() - amount);
+        addTransaction(new Transaction(TypeOperation.VIREMENT, amount, "Virement de " + amount + "€"));
+    }
 }
